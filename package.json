@@ -1,0 +1,20 @@
+{
+  "name": "465_dorrell_jason_client",
+  "version": "0.0.0",
+  "description": "465_dorrell_jason_client",
+  "main": "app.js",
+  "author": {
+    "name": "Jason Dorrell"
+  },
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "tls": "0.0.1"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
+  },
+  "repository": {
+  "type": "git",
+  "url": "git://github.com/jdorrell/465_dorrell_jason_client.git"
+  }
+}
