@@ -14,7 +14,10 @@
     "dotenv": "^4.0.0"
   },
   "repository": {
-  "type": "git",
-  "url": "git://github.com/jdorrell/465_dorrell_jason_client.git"
+    "type": "git",
+    "url": "git://github.com/jdorrell/465_dorrell_jason_client.git"
+  },
+  "scripts": {
+  "start": "node myapp.js"
   }
 }

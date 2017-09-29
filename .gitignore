@@ -1,3 +1,5 @@
 ﻿.env
-465_dorrell_jason_client.njsproj
+.njsproj
 typings/
+.vs/
+.sln
