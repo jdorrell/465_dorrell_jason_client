@@ -31,25 +31,25 @@ function connection() {
 
         console.log("tls_client has received:%s \n", fromServer);
         
-        if (fromServer === modifiedTest) {
-            socket.write("line 2");
-        };
+        //if (fromServer === modifiedTest) {
+        //    socket.write("line 2");
+        //};
 
-        if (fromServer == "line 2") {
-            socket.write("line 3");
-        };
+        //if (fromServer == "line 2") {
+        //    socket.write("line 3");
+        //};
 
-        if (fromServer == "line 3") {
-            socket.write("line 4");
-        };
+        //if (fromServer == "line 3") {
+        //    socket.write("line 4");
+        //};
 
-        if (fromServer == "line 4") {
-            socket.write("socket closing");
-        };
+        //if (fromServer == "line 4") {
+        //    socket.write("socket closing");
+        //};
 
-        if (fromServer == "socket closing") {
-            socket.destroy();
-        };
+        //if (fromServer == "socket closing") {
+        //    socket.destroy();
+        //};
 
     });
 
