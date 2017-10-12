@@ -1,6 +1,9 @@
 ﻿require('dotenv').config();
-require('./message.json');
+
+const msg = require('./message.json');//will come from input file
+
 var transactionCount = 0;
+
 
 
 module.exports =
@@ -18,14 +21,14 @@ module.exports =
             if (res === process.env.SERVER_HELLO && transactionCount === 2) {
 
                 //console.log('condition fullfilled');//for testting
-                return(process.env.MAIL_FROM + " booger");
+                return (process.env.MAIL_FROM + ' \x3C' + msg.message.header.email_user + '\x3E');
 
             };
 
             if (res === process.env.SERVER_OK && transactionCount === 3) {
 
                 //console.log('condition fullfilled');//for testting
-                return(process.env.RCPT_TO);
+                return (process.env.RCPT_TO + ' \x3C' + msg.message.header.email_recipient + '\x3E');
 
             };
 
@@ -47,14 +50,14 @@ module.exports =
 
                 //console.log('condition fullfilled');//for testting
                 return(process.env.QUIT);
-            };//good to this line
+            };
 
             if (res === process.env.SERVER_GOODBYE && transactionCount === 7) {
 
                 //console.log('condition fullfilled');//for testting
                 console.log("MESSAGE SENT!");
                 return (res);
-            };//good to this line
+            };
         }
     };
 //////////////////////////////////////////////////////////////////////////////////////////

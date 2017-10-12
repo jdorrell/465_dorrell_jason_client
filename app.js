@@ -1,8 +1,10 @@
 ﻿require('dotenv').config();
 
 const tls = require('tls'),
-    fs = require('fs');
+    fs = require('fs'),
+    msg = require('./message.json'),//will come from input file
     transmit = require('./transmit.js');
+
 
 var options = {
     host: process.env.SERVER_ADDRESS,
@@ -58,19 +60,20 @@ app.socket.addListener('data', function (data) {
 
     if (req === ('\r\n' + process.env.CLIENT_END + '\r\n')) {
 
-            app.socket.write("Way to go dumbass!");
-            app.socket.write(req);
+        app.socket.write(msg.message.body.email_body);
+        app.socket.write(req);
 
-    } else 
+    } else
 
         if (req === res) {
 
-            app.socket.close;
+            app.socket.close;//does not close
 
-        } else
+        } else {
 
             app.socket.write(req);
 
+        };
 });
 
 app.socket.addListener('error', function (error) {
