@@ -3,7 +3,8 @@
 const tls = require('tls'),
     fs = require('fs'),
     msg = require('./message.json'),//will come from input file
-    transmit = require('./transmit.js');
+    transmit = require('./transmit.js'),
+    colors = require('colors');
 
 
 var options = {
@@ -56,11 +57,12 @@ app.socket.addListener('data', function (data) {
     var res = data;//server response
     var req = transmit.send(res);//client request
 
-    console.log(res);
+    console.log(res.blue);
 
     if (req === ('\r\n' + process.env.CLIENT_END + '\r\n')) {
 
-        app.socket.write(msg.message.body.email_body);
+        //app.socket.write(msg.email_subject + msg.email_body);//keep for now - may send piecemeal later
+        app.socket.write(JSON.stringify(msg.content));
         app.socket.write(req);
 
     } else
@@ -88,6 +90,7 @@ app.socket.addListener('close', function () {
     // do something  
 });  
 
+//console.log(JSON.stringify(msg));     //keep for testing
 
 //snippets
 //tls.socket.authorized ? 'authorized' : 'unauthorized');
