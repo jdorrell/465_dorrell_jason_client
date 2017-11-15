@@ -2,22 +2,32 @@
 
 const tls = require('tls'),
     fs = require('fs'),
-    msg = require('./message.json'),//will come from input file
+    compose = require('./compose.js'),
     transmit = require('./transmit.js'),
     prompt = require('prompt'),
+    msg = require(process.env.QUEUE),
     colors = require('colors');
 
-///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 prompt.start();
 
 prompt.get(['command'], function (err, user_input) {
+
+    if (user_input.command.toLowerCase() === process.env.COMPOSE_MAIL) {
+
+        compose.input();
+
+    };
 
     if (user_input.command.toLowerCase() === process.env.SEND_MAIL) {
         Mail();
     };
 
 });
-////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 function Mail() {
@@ -71,7 +81,8 @@ function Mail() {
         if (req === ('\r\n' + process.env.CLIENT_END + '\r\n')) {
 
             //app.socket.write(msg.email_subject + msg.email_body);//keep for now - may send piecemeal later
-            app.socket.write(JSON.stringify(msg.content));
+            app.socket.write(JSON.stringify(msg));
+
             app.socket.write(req);
 
         } else

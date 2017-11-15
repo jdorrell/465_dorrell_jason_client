@@ -1,10 +1,8 @@
 ﻿require('dotenv').config();
 
-const msg = require('./message.json');//will come from input file
+const msg = require(process.env.QUEUE);//will come from input file
 
 var transactionCount = 0;
-
-
 
 module.exports =
     {
@@ -21,14 +19,15 @@ module.exports =
             if (res === process.env.SERVER_HELLO && transactionCount === 2) {
 
                 //console.log('condition fullfilled');//for testting
-                return (process.env.MAIL_FROM + ' \x3C' + msg.content.email_user + '\x3E');
+                return (process.env.MAIL_FROM + ' \x3C' + msg.From + '\x3E');
 
             };
 
             if (res === process.env.SERVER_OK && transactionCount === 3) {
 
                 //console.log('condition fullfilled');//for testting
-                return (process.env.RCPT_TO + ' \x3C' + msg.content.email_recipient + '\x3E');
+                return (process.env.RCPT_TO + ' \x3C' + msg.To + '\x3E');
+
 
             };
 
