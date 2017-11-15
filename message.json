@@ -1,9 +1,9 @@
 ﻿{
-  "content": {
+  
     "email_user": "j_sender@email.com",
     "email_recipient": "j_recipient@email.com",
     "email_subject": "Test Email",
     "email_body": "Test email sent from python"
-  }
+  
 }
 
