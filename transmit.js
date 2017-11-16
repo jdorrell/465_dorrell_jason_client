@@ -1,6 +1,6 @@
 ﻿const handshake = require('./handshake.js'),
     tls = require('tls'),
-    msg = require(process.env.QUEUE),
+    //msg = require(process.env.QUEUE),
     fs = require('fs');
 
 
@@ -58,6 +58,8 @@
                     if (res) var req = handshake.send(res);//client request
 
                     if (req === ('\r\n' + process.env.CLIENT_END + '\r\n')) {
+
+                        const msg = require(process.env.QUEUE)
 
                         //app.socket.write(msg.email_subject + msg.email_body);//keep for now - may send piecemeal later
                         app.socket.write(JSON.stringify(msg));
