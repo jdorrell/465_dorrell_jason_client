@@ -1,10 +1,13 @@
-﻿const prompt = require('prompt'),
+﻿require('dotenv').config();
+
+const prompt = require('prompt'),
     timestamp = require('unix-timestamp'),
     JsonDb = require('node-json-db'),
     transmit = require('./transmit.js'),
     msg = require('./message.json');//remove when login function is built
 
-var db = new JsonDb(process.env.QUEUE, true, true),
+var /*queue = new JsonDb(process.env.QUEUE, true, true),*/
+    drafts = new JsonDb(process.env.DRAFT, true, true),
     msgID = "/" + timestamp.now(),
     schema = {
         properties: {
@@ -17,7 +20,7 @@ var db = new JsonDb(process.env.QUEUE, true, true),
             BODY: {
                 required: true
             },
-            SEND_NOW: {
+            ACCEPT: {
                 required: true
             }
         }
@@ -30,12 +33,38 @@ module.exports =
         function () {
 
             prompt.get(schema, function (err, result) {
+               
+                if (result.ACCEPT.toLowerCase() === 'yes') {
 
-                db.push('ID', { msgID, From: msg.email_user, To: result.TO, Subject: result.SUBJECT, Body: result.BODY });
-                console.log("message queued".green);
+                    postmark();
 
-                //console.log(result.SEND_NOW);  //for testing
-                if (result.SEND_NOW === 'yes') transmit.send();
+                    prompt.get(['Send'], function (err, SEND_NOW) {
+
+                        if (SEND_NOW.Send.toLowerCase() === 'yes') {
+
+                            transmit.send();
+
+                        };
+
+                        if (SEND_NOW.Send.toLowerCase() === 'no') {
+
+                            drafts.push(msgID, {From: msg.email_user, To: result.TO, Subject: result.SUBJECT, Body: result.BODY });
+                            console.log("message saved in drafts".green);
+
+                        };
+                    });
+                };
+
+                function postmark() {
+                    const queue = new JsonDb(process.env.QUEUE, true, true);
+                    queue.push('ID', { msgID, From: msg.email_user, To: result.TO, Subject: result.SUBJECT, Body: result.BODY });
+                    console.log("message queued".green);
+                    if (queue.msgID === '/%s', msgID) {
+                        return;
+
+                    };
+                };
+
 
             });
 

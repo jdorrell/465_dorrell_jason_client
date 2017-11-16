@@ -1,13 +1,14 @@
 ﻿require('dotenv').config();
 
-const msg = require(process.env.QUEUE);//will come from input file
-
 var transactionCount = 0;
 
 module.exports =
     {
         send:
         function (res) {
+
+            const msg = require(process.env.QUEUE);//will come from input file
+
             transactionCount++
             if (res === process.env.SERVER_WELCOME) {
 
