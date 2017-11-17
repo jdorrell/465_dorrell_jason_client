@@ -1,6 +1,6 @@
-﻿const handshake = require('./handshake.js'),
+﻿const clear = require('./clear.js'),
+    handshake = require('./handshake.js'),
     tls = require('tls'),
-    //msg = require(process.env.QUEUE),
     fs = require('fs');
 
 
@@ -52,24 +52,24 @@
                 app.socket.addListener('data', function (data) {
 
                     // received data  
-                    var res = data;//server response
+                    var res = data;// res = server response
                     console.log(res.blue);
 
-                    if (res) var req = handshake.send(res);//client request
+                    if (res) var req = handshake.send(res);//req = client request
 
                     if (req === ('\r\n' + process.env.CLIENT_END + '\r\n')) {
 
                         const msg = require(process.env.QUEUE)
 
-                        //app.socket.write(msg.email_subject + msg.email_body);//keep for now - may send piecemeal later
                         app.socket.write(JSON.stringify(msg));
 
                         app.socket.write(req);
 
                     } else
 
-                        if (req === res) {
+                        if (req === res) {//handshake echoes SERVER GOODBYE as the req
 
+                            clear.queue();
                             app.socket.close;//does not close
 
                         } else {
